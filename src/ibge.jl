@@ -51,7 +51,7 @@ Fetch series in IBGE's API under the address `url`. Use the `QUERY BUILD` tab in
 
 _`https://servicodados.ibge.gov.br/api/docs/agregados?versao=3`_.
 
-Argument `frequency` informs should be `m` = month or `q` = quarterly).
+Argument `frequency` should be `m` = month or `q` = quarterly).
 """
 function ibge(url::String, frequency::String)
     response = HTTP.request("GET", url)

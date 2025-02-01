@@ -41,4 +41,32 @@ After obtaining a local copy of the `BrazilEconData` repository through cloning 
 
 ### Accessing data
 
-Use function `ibge`
+#### IBGE
+
+Use function `ibge` to download a single series from IBGE's API (see [servicodados.ibge.gov.br](servicodados.ibge.gov.br)). The arguments should be: 1. the url for the data series, the query of which you can build using IBGE's website; 2. the frequency of the series (`"m"` for monthly, `"q"` for quarterly).   
+
+For example, to download CPI data:
+```julia
+url = "https://servicodados.ibge.gov.br/api/v3/agregados/6691/periodos/-6/variaveis/2266?localidades=N1[all]"
+ibge_df = ibge(url, "m"); # consumer price index
+```
+
+#### Brazilian Central Bank (BCB)
+
+Use function `bcb` to fetch one or more series. The single argument should be the id number of the corresponding series (which you can find on the [BCB's website](https://www3.bcb.gov.br/sgspub/localizarseries/localizarSeries.do?method=prepararTelaLocalizarSeries)). You can pass it as an integer, or as a string, and you can pass a vector of id numbers. For example:
+```julia
+bcb_df = bcb(1782) # monetary base
+bcb_df = bcb(["1780", "1781", "1782"])
+```
+
+#### Ipeadata
+Use function `ipeadata` to fetch one or more series. The argument should be the id of the series. For example: 
+```julia
+ipedata_df = ipeadata("BM12_PIB12")
+ipedata_df = ipeadata(["BM12_PIB12", "SCN10_VASERVN10"])
+```
+For convenience, you can use `ipeadata_dictionaries()` to download the dictionaries of themes and time series, and then `ipeadata_print` to filter the dictionary of series.
+```julia
+themes, series = ipeadata_dictionaries()
+ipeadata_print(series; theme_code=8, active=true, frequency=nothing)
+```
