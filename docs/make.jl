@@ -13,4 +13,5 @@ makedocs(
     authors="Livio Maya",
     # clean=true,
     source="src/",
+    remotes=nothing
 )
